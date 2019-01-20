@@ -1,6 +1,7 @@
 ﻿    #wrap {
         width: 1100px;
         margin: 0 auto;
+
     }
         
     #external-events {
@@ -10,6 +11,8 @@
         border: 1px solid #ccc;
         background: #eee;
         text-align: left;
+        margin: 20px;
+        margin-left: 30px;
     }
         
     #external-events h4 {
@@ -32,4 +35,12 @@
     #external-events p input {
         margin: 0;
         vertical-align: middle;
+    }
+
+
+    #scheduler {
+
+        float: left;
+        width: 900px;
+
     }

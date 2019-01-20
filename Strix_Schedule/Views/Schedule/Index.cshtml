@@ -4,35 +4,45 @@
 }
 
 <h2> </h2>
-<div id="scheduler">
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" id="btnAddEmployee" style="float: left">Add Employee</button>
-    </div>
-</div>
 
-@*@Draggable Event menu*@
-<div id='wrap'>
+    
+    <div id='wrap'>
 
-    <div id='external-events'>
-        <div id='external-events-listing'>
-            <h4>Draggable Events</h4>
-            <div class='fc-event'>My Event 1</div>
-            <div class='fc-event'>My Event 2</div>
-            <div class='fc-event'>My Event 3</div>
-            <div class='fc-event'>My Event 4</div>
-            <div class='fc-event'>My Event 5</div>
+        @*@Schedule element*@
+        <div id="scheduler">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnAddEmployee" style="float: left">Add Employee</button>
+            </div>
         </div>
-        <p>
-            <input type='checkbox' id='drop-remove' checked='checked' />
-            <label for='drop-remove'>remove after drop</label>
-        </p>
-    </div>
 
-    <div id='calendar'></div>
 
-    <div style='clear:both'></div>
+        @*@Draggable Event menu*@
+        <div id='external-events'>
+            <div id='external-events-listing'>
+                <h4>Draggable Events</h4>
+                <div class='fc-event'>My Event 1</div>
+                <div class='fc-event'>My Event 2</div>
+                <div class='fc-event'>My Event 3</div>
+                <div class='fc-event'>My Event 4</div>
+                <div class='fc-event'>My Event 5</div>
+            </div>
+            <p>
+                <input type='checkbox' id='drop-remove' checked='checked' />
+                <label for='drop-remove'>remove after drop</label>
+            </p>
+        </div>
 
+
+           
+
+
+
+            <div style='clear:both'></div>
+
+       
 </div>
+
+
 
 
 @*Add/Edit Employee Modal*@
@@ -186,12 +196,11 @@
 
 
 
-
+<link href="~/Content/dragableEventMenu.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-<link href="dragableEventMenu.css" rel="stylesheet" />
 
 @section scripts{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
