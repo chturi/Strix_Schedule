@@ -18,6 +18,9 @@ namespace Strix_Schedule.Models
         public int EmployeeID { get; set; } //Also Employee ID
         public string Description { get; set; }
         public DateTime Start { get; set; }
+
+        public DateTime StartTime { get; set; }
+        public DateTime Duration { get; set; }
         public DateTime? End { get; set; }
         public bool IsFullDay { get; set; }
         public string ThemeColor { get; set; }

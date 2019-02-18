@@ -40,13 +40,32 @@ namespace Strix_Schedule.Controllers
                 //Saves All information about event to temporary result model
                 resourceModel res = new resourceModel();
 
-                res.title = tempEmp.FirstName + " " + tempEmp.LastName;
                 res.EventID = evnt.EventID;
+                res.EmployeeID = tempEmp.EmployeeID;
+
+                //Saves a pre defined dessert event in the calendar
+                if (evnt.Description == "Dessert")
+                        {
+                    res.title = evnt.Description;
+
+                    res.Start = new DateTime(evnt.Start.Year, evnt.Start.Month,evnt.Start.Day,7,0,0);
+                    res.End = new DateTime(evnt.Start.Year, evnt.Start.Month, evnt.Start.Day, 15, 30, 0);
+
+
+
+                    res.Description = tempEmp.FirstName + " " + tempEmp.LastName + "Works by the dessert station today.";
+                    res.IsFullDay = false;
+                    res.ThemeColor = "yellow";
+                    
+                }
+
+
+                else { 
+                res.title = evnt.Description;
                 res.Start = evnt.Start;
                 res.IsFullDay = evnt.IsFullDay;
                 res.ThemeColor = evnt.ThemeColor;
-                res.EmployeeID = tempEmp.EmployeeID;
-
+               
 
                 //Adding text to event description depending on how long employee works that day
                 if (res.IsFullDay)
@@ -59,6 +78,10 @@ namespace Strix_Schedule.Controllers
                     TimeSpan? timeDif = res.End - res.Start;
                     res.Description = tempEmp.Occupation + ", works " + timeDif.Value.TotalHours + " hours today.";
                 }
+
+                }
+
+
                 resList.Add(res);
             }
 

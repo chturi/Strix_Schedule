@@ -366,8 +366,7 @@
                             Start: moment(event.start).format("MM-DD-YYYY HH:mm a"),
                             End: event.end != null ? moment(event.end).format("MM-DD-YYYY HH:mm a") : null,
                             Description: event.title,
-                            ThemeColor: event.color,
-                            IsFullDay: false,
+                            
                         }
                         console.log(data);
                         SaveEvent(data);
@@ -651,8 +650,7 @@
                     title: $.trim($(this).text()), // use the element's text as the event title
                     duration: '09:00',
                     startTime: '06:00:00',
-                    Description: $.trim($(this).text()),
-                    color: 'red',
+                    
 
 
 
