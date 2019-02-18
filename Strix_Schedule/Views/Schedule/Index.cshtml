@@ -5,35 +5,33 @@
 
 <h2> </h2>
 
-    
-    <div id='wrap'>
 
-        @*@Schedule element*@
-        <div id="scheduler">
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="btnAddEmployee" style="float: left">Add Employee</button>
-            </div>
+<div id='wrap'>
+
+    @*@Schedule element*@
+    <div id="scheduler">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="btnAddEmployee" style="float: left">Add Employee</button>
+        </div>
+    </div>
+
+
+    @*@Draggable Event menu*@
+    <div id='external-events'>
+        <div id='external-events-listing'>
+            <h4>Draggable Events</h4>
+            <div class='fc-event'>Kuren</div>
+            <div class='fc-event'>Dessert</div>
+            <div class='fc-event'>Matsalen</div>
+            <div class='fc-event'>Hovtjänst</div>
+            <div class='fc-event'>Deltid</div>
+            <div class='fc-event'>Extra</div>
         </div>
 
+    </div>
 
-        @*@Draggable Event menu*@
-        <div id='external-events'>
-            <div id='external-events-listing'>
-                <h4>Draggable Events</h4>
-                <div class='fc-event'>My Event 1</div>
-                <div class='fc-event'>My Event 2</div>
-                <div class='fc-event'>My Event 3</div>
-                <div class='fc-event'>My Event 4</div>
-                <div class='fc-event'>My Event 5</div>
-            </div>
-            <p>
-                <input type='checkbox' id='drop-remove' checked='checked' />
-                <label for='drop-remove'>remove after drop</label>
-            </p>
-        </div>
+    <div style='clear:both'></div>
 
-            <div style='clear:both'></div>
-       
 </div>
 
 
@@ -57,8 +55,8 @@
                     <div class="form-group">
                         <label>Last Name</label>
                         <input type="text" id="txtLastName" class="form-control" />
-                    </div>            
-                      <div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <label>Occupation</label>
                         <select id="ddOccupation" class="form-control">
                             <option value="Extra">Extra</option>
@@ -139,7 +137,7 @@
                     </div>
                     <div class="form-group">
                         <label>Start</label>
-                        <div class="input-group date" id="dtp1" >
+                        <div class="input-group date" id="dtp1">
                             <input type="text" id="txtStart" class="form-control" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -192,18 +190,22 @@
 @*CSS Imports*@
 <link href="~/Content/dragableEventMenu.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
 @*Javascript imports*@
 @section scripts{
-<script src="~/Scripts/jquery-1.12.4.min.js"></script>
-<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    @*<script src="~/Scripts/jquery-1.12.4.min.js"></script> (Not needed for some reason.)*@
+
+
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
 
 
 
@@ -221,10 +223,10 @@
 
             //Functions for Application
 
-            //Ajax call to get the events from database           
+            //Ajax call to get the events from database
             function FetchEventAndRenderCalendar() {
                 schedule = [];
-                
+
                 $.ajax({
                     type: "GET",
                     url: "/Schedule/GetEvents",
@@ -241,13 +243,13 @@
                                 allDay: v.IsFullDay,
                                 resourceId: v.EmployeeID,
                                 color: v.ThemeColor
-                                
-                               
-                               
+
+
+
 
                             });
                         })
-                       
+
                         GenerateScheduler(schedule)
                         $('#scheduler').fullCalendar('refetchEvents')
                         $('#scheduler').fullCalendar('refetchResources')
@@ -258,7 +260,7 @@
                         alert('Failed to load all events in schedule!')
                     },
                 })
-            }    
+            }
             //Function to Generate Calendar
             function GenerateScheduler(schedule) {
                 //Clear any previous rendered Scheduler
@@ -288,7 +290,7 @@
                     },
                     eventLimit: true, //if resource slot is full, replaces graphical represenation with plus sign.
                     eventColor: '#378006', //Default event color
-                    events: schedule, 
+                    events: schedule,
                     resourceGroupField: 'groupId',
                     resources: {
                         url: "/Schedule/GetResources",
@@ -297,7 +299,7 @@
                     //On click event for resources
                     resourceRender: function(resource, labelTds, bodyTds) {
                         labelTds.on('click', function () {
-                            selectedResource = resource;                        
+                            selectedResource = resource;
                             $('#resourceClickModal #resourceTitle').text(resource.title);
                             var $description = $('<div/>');
                             $description.append($('<p>').html('<b>Employment ID: </b>' + resource.id));
@@ -319,7 +321,7 @@
                         $('#eventClickModal #pDetails').empty().html($description);
                         $('#eventClickModal').modal();
                     },
-                    select: function (start,end,event,view,resource) {                      
+                    select: function (start,end,event,view,resource) {
                         var ResourceTitle = resource.title
                         var ResourceId = resource.id
                         selectedEvent = {
@@ -332,7 +334,7 @@
                             color: '',
                             resourceId: ResourceId
                         }
-                        
+
                         openAddEditForm();
                     },
                     //Time slot settings
@@ -351,18 +353,32 @@
                             EmployeeID: event.resourceId,
                             Start: moment(event.start).format("MM-DD-YYYY HH:mm a"),
                             End: event.end != null ? moment(event.end).format("MM-DD-YYYY HH:mm a") : null,
-                            Description: event.description,
+                            Description: event.title,
                             ThemeColor: event.color,
                             IsFullDay: event.allDay
                         }
                         SaveEvent(data);
                     },
+                    eventReceive: function (event) {
+                        var data = {
+                            EventID: 0,
+                            EmployeeID: event.resourceId,
+                            Start: moment(event.start).format("MM-DD-YYYY HH:mm a"),
+                            End: event.end != null ? moment(event.end).format("MM-DD-YYYY HH:mm a") : null,
+                            Description: event.title,
+                            ThemeColor: event.color,
+                            IsFullDay: false,
+                        }
+                        console.log(data);
+                        SaveEvent(data);
+                    }
+                    ,
                     eventOverlap: false,
                     weekNumbers: true,
                     draggable: true,
                     weekends: false,
                      })
-                
+
             }
             //Function to Open Add/Edit form
             function openAddEditForm() {
@@ -393,10 +409,10 @@
                     namesplit = selectedResource.title.split(" "); // Split title into first and last name
                     var firstname = namesplit[0];
                     var lastname = namesplit.slice(1, namesplit.length).toString().replace(","," ") //If persons last name has several or spaces between lastnames they are included
-                    
-                    
+
+
                     $('#hdEmployeeID').val(selectedResource.id);
-                    $('#txtFirstName').val(firstname); 
+                    $('#txtFirstName').val(firstname);
                     $('#txtLastName').val(lastname);
                     $('#ddOccupation').val(selectedResource.groupId);
 
@@ -444,7 +460,7 @@
                     }
                 })
             }
-            
+
             function resetValEventModal()
             {
                 $('#hdEventID').val(0),
@@ -473,7 +489,7 @@
                 resetValResourceModal();
                 openAddEditEmployeeForm();
             })
-            
+
             //Button to Save New Employee
             $('#btnSaveEmployee').click(function () {
                 if ($('#txtFirstName').val().trim() == "") {
@@ -574,23 +590,23 @@
                     Description: $('#txtDescription').val(),
                     ThemeColor: $('#ddThemeColor').val(),
                     IsFullDay: $('#chkIsFullDay').is(':checked')
-                    
+
                 }
                 SaveEvent(data);
-                
-               
+
+
 
 
             })
             $('#dtp1').datetimepicker({
                 format: 'MM/DD/YYYY HH:mm A',
-                
-                
+
+
             });
             $('#dtp2').datetimepicker({
                 format: 'MM/DD/YYYY HH:mm A',
-                
-            });  
+
+            });
             $('#chkIsFullDay').change(function () {
                 if ($(this).is(':checked')) {
                     $('#divEndDate').hide()
@@ -599,7 +615,7 @@
                     $('#divEndDate').show()
                 }
             })
-            
+
             //Employee edit buttons
             $('#btnEditRes').click(function () {
                 //Open modal window for edit form for selected event
@@ -631,9 +647,17 @@
 
                 // store data so the calendar knows to render an event upon drop
                 $(this).data('event', {
+                    EventID: 0,
                     title: $.trim($(this).text()), // use the element's text as the event title
-                    stick: true // maintain when user navigates (see docs on the renderEvent method)
+                    duration: '09:00',
+                    startTime: '06:00:00',
+                    Description: $.trim($(this).text()),
+                    color: 'red',
+
+
+
                 });
+
 
                 // make the event draggable using jQuery UI
                 $(this).draggable({
@@ -646,6 +670,6 @@
 
 
         })
-    </script>    
-    }
+    </script>
+}
 
