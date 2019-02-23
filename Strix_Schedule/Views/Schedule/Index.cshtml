@@ -351,9 +351,10 @@
                         var data = {
                             EventID: event.eventID,
                             EmployeeID: event.resourceId,
+                            Title: event.title,
                             Start: moment(event.start).format("MM-DD-YYYY HH:mm a"),
                             End: event.end != null ? moment(event.end).format("MM-DD-YYYY HH:mm a") : null,
-                            Description: event.title,
+                            Description: event.description,
                             ThemeColor: event.color,
                             IsFullDay: event.allDay
                         }
@@ -365,28 +366,34 @@
                         var dateHolderEnd = new Date(event.start);
                         //Changing hours on schedule depending on which event was dragged while keeping the date selected by the users dropp.
                         if (event.title == "Dessert") {
-                            dateHolderStart.setHours(7);
-                            dateHolderEnd.setHours(15,30)
+                            dateHolderStart.setHours(7)
+                            dateHolderEnd.setHours(15, 30)
+                            event.color = "#c9c36e"
                         }
                         else if (event.title == "Kuren") {
-                            dateHolderStart.setHours(6);
+                            dateHolderStart.setHours(6)
                             dateHolderEnd.setHours(15)
+                            event.color = "#56ad68"
                         }
                         else if (event.title == "Matsalen") {
                             dateHolderStart.setHours(9);
                             dateHolderEnd.setHours(17)
+                            event.color = "#5677ad"
                         }
                         else if (event.title == "Hovtjänst") {
                             dateHolderStart.setHours(7,30);
                             dateHolderEnd.setHours(16)
+                            event.color = "#6dc9a1"
                         }
                         else if (event.title == "Deltid") {
                             dateHolderStart.setHours(10);
                             dateHolderEnd.setHours(15)
+                            event.color = "#8429ce"
                         }
                         else if (event.title == "Extra") {
                             dateHolderStart.setHours(10);
                             dateHolderEnd.setHours(16)
+                            event.color = "#bc23ac"
                         }
 
                         var data = {
@@ -395,7 +402,8 @@
                             Title: event.title,
                             Start: moment(dateHolderStart).format("MM-DD-YYYY HH:mm a"),
                             End: moment(dateHolderEnd).format("MM-DD-YYYY HH:mm a"),
-                            Description: event.title
+                            Description: event.title,
+                            ThemeColor: event.color
                         }
                         console.log(data);
                         SaveEvent(data);
