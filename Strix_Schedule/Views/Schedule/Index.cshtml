@@ -235,7 +235,7 @@
                         $.each(data, function (i, v) {
                             schedule.push({
                                 eventID: v.EventID,
-                                title: v.title,
+                                title: v.Title,
                                 description: v.Description,
                                 start: moment(v.Start).format(),
                                 end: v.End != null ? moment(v.End).format() : null,
@@ -360,13 +360,42 @@
                         SaveEvent(data);
                     },
                     eventReceive: function (event) {
+                        //Temporary Variables for date manipulation.
+                        var dateHolderStart = new Date(event.start);
+                        var dateHolderEnd = new Date(event.start);
+                        //Changing hours on schedule depending on which event was dragged while keeping the date selected by the users dropp.
+                        if (event.title == "Dessert") {
+                            dateHolderStart.setHours(7);
+                            dateHolderEnd.setHours(15,30)
+                        }
+                        else if (event.title == "Kuren") {
+                            dateHolderStart.setHours(6);
+                            dateHolderEnd.setHours(15)
+                        }
+                        else if (event.title == "Matsalen") {
+                            dateHolderStart.setHours(9);
+                            dateHolderEnd.setHours(17)
+                        }
+                        else if (event.title == "Hovtjänst") {
+                            dateHolderStart.setHours(7,30);
+                            dateHolderEnd.setHours(16)
+                        }
+                        else if (event.title == "Deltid") {
+                            dateHolderStart.setHours(10);
+                            dateHolderEnd.setHours(15)
+                        }
+                        else if (event.title == "Extra") {
+                            dateHolderStart.setHours(10);
+                            dateHolderEnd.setHours(16)
+                        }
+
                         var data = {
                             EventID: 0,
                             EmployeeID: event.resourceId,
-                            Start: moment(event.start).format("MM-DD-YYYY HH:mm a"),
-                            End: event.end != null ? moment(event.end).format("MM-DD-YYYY HH:mm a") : null,
-                            Description: event.title,
-                            
+                            Title: event.title,
+                            Start: moment(dateHolderStart).format("MM-DD-YYYY HH:mm a"),
+                            End: moment(dateHolderEnd).format("MM-DD-YYYY HH:mm a"),
+                            Description: event.title
                         }
                         console.log(data);
                         SaveEvent(data);

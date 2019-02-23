@@ -42,26 +42,7 @@ namespace Strix_Schedule.Controllers
 
                 res.EventID = evnt.EventID;
                 res.EmployeeID = tempEmp.EmployeeID;
-
-                //Saves a pre defined dessert event in the calendar
-                if (evnt.Description == "Dessert")
-                        {
-                    res.title = evnt.Description;
-
-                    res.Start = new DateTime(evnt.Start.Year, evnt.Start.Month,evnt.Start.Day,7,0,0);
-                    res.End = new DateTime(evnt.Start.Year, evnt.Start.Month, evnt.Start.Day, 15, 30, 0);
-
-
-
-                    res.Description = tempEmp.FirstName + " " + tempEmp.LastName + "Works by the dessert station today.";
-                    res.IsFullDay = false;
-                    res.ThemeColor = "yellow";
-                    
-                }
-
-
-                else { 
-                res.title = evnt.Description;
+                res.title = evnt.Title;
                 res.Start = evnt.Start;
                 res.IsFullDay = evnt.IsFullDay;
                 res.ThemeColor = evnt.ThemeColor;
@@ -79,7 +60,7 @@ namespace Strix_Schedule.Controllers
                     res.Description = tempEmp.Occupation + ", works " + timeDif.Value.TotalHours + " hours today.";
                 }
 
-                }
+                
 
 
                 resList.Add(res);
@@ -138,6 +119,7 @@ namespace Strix_Schedule.Controllers
                     //Replaces fields that has been updated
                     oldEvent.EventID = evnt.EventID;
                     oldEvent.EmployeeID = evnt.EmployeeID;
+                    oldEvent.Title = evnt.Title;
                     oldEvent.Start = evnt.Start;
                     oldEvent.End = evnt.End;
                     oldEvent.IsFullDay = evnt.IsFullDay;

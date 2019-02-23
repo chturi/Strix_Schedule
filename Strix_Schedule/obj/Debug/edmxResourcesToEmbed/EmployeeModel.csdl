@@ -23,6 +23,7 @@
     <Property Name="IsFullDay" Type="Boolean" Nullable="false" />
     <Property Name="ThemeColor" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Employee" Relationship="Employee_Schedule_DatabaseModel.FK__Events__Employee__286302EC" FromRole="Events" ToRole="Employees" />
+    <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK__Events__Employee__286302EC">
     <End Role="Employees" Type="Self.Employee" Multiplicity="1" />

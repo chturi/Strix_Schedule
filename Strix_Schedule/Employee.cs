@@ -11,7 +11,7 @@ namespace Strix_Schedule
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,13 +19,13 @@ namespace Strix_Schedule
         {
             this.Events = new HashSet<Event>();
         }
-
+    
         public int EmployeeID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Occupation { get; set; }
         public string EmployeeColor { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
     }

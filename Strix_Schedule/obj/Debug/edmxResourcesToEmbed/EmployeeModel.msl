@@ -15,6 +15,7 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="Employee_Schedule_DatabaseModel.Event">
         <MappingFragment StoreEntitySet="Events">
+          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="EventID" ColumnName="EventID" />
           <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
           <ScalarProperty Name="Description" ColumnName="Description" />

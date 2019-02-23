@@ -11,7 +11,7 @@ namespace Strix_Schedule
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class Event
     {
         public int EventID { get; set; }
@@ -21,7 +21,8 @@ namespace Strix_Schedule
         public Nullable<System.DateTime> End { get; set; }
         public bool IsFullDay { get; set; }
         public string ThemeColor { get; set; }
-
+        public string Title { get; set; }
+    
         public virtual Employee Employee { get; set; }
     }
 }
