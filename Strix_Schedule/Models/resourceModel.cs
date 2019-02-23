@@ -11,6 +11,7 @@ namespace Strix_Schedule.Models
         //Temporary Model for Resource
         public int id { get; set; }
         public string title { get; set; }
+        public string EventTitle { get; set; }
         public string groupId { get; set; }
 
         //Temporary Model for Events

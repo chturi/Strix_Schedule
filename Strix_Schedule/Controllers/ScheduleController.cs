@@ -42,7 +42,7 @@ namespace Strix_Schedule.Controllers
 
                 res.EventID = evnt.EventID;
                 res.EmployeeID = tempEmp.EmployeeID;
-                res.title = evnt.Title;
+                res.EventTitle = evnt.Title;
                 res.Start = evnt.Start;
                 res.IsFullDay = evnt.IsFullDay;
                 res.ThemeColor = evnt.ThemeColor;

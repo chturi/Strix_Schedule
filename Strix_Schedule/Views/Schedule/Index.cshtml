@@ -235,7 +235,7 @@
                         $.each(data, function (i, v) {
                             schedule.push({
                                 eventID: v.EventID,
-                                title: v.Title,
+                                title: v.EventTitle,
                                 description: v.Description,
                                 start: moment(v.Start).format(),
                                 end: v.End != null ? moment(v.End).format() : null,
