@@ -19,13 +19,13 @@
     @*@Draggable Event menu*@
     <div id='external-events'>
         <div id='external-events-listing'>
-            <h4>Draggable Events</h4>
-            <div class='fc-event'>Kuren</div>
-            <div class='fc-event'>Dessert</div>
-            <div class='fc-event'>Matsalen</div>
-            <div class='fc-event'>Hovtjänst</div>
-            <div class='fc-event'>Deltid</div>
-            <div class='fc-event'>Extra</div>
+            <h4>Work shifts</h4>
+            <div class='fc-event' style="background-color:#56ad68">Kuren</div>
+            <div class='fc-event' style="background-color:#c9c36e">Dessert</div>
+            <div class='fc-event' style="background-color:#5677ad">Matsalen</div>
+            <div class='fc-event' style="background-color:#6dc9a1">Hovtjänst</div>
+            <div class='fc-event' style="background-color:#8429ce">Deltid</div>
+            <div class='fc-event' style="background-color:#bc23ac">Extra</div>
         </div>
 
     </div>
@@ -132,8 +132,8 @@
                     <input type="hidden" id="hdEventID" value="0" />
                     <input type="hidden" id="hdEmployeeID" value="0" />
                     <div class="form-group">
-                        <label>Employee</label>
-                        <input readonly type="text" id="txtSubject" class="form-control" />
+                        <label>Title</label>
+                        <input type="text" id="txtSubject" class="form-control" />
                     </div>
                     <div class="form-group">
                         <label>Start</label>
@@ -169,7 +169,7 @@
                             <option value="blue">Blue</option>
                             <option value="black">Black</option>
                             <option value="green">Green</option>
-                            <option value="yellow">Yellow</option>
+                            <option value="#c9c36e">Yellow</option>
                         </select>
                     </div>
                     <button type="button" id="btnSave" class="btn btn-success">Save</button>
@@ -217,6 +217,10 @@
             var schedule = [];
             var selectedEvent = null;
             var selectedResource = null;
+            //Date to be rendendered by calendar      
+            var today = new Date();
+            var renderDate = moment(today).format();
+            
             //Initially execution to render calendar
             FetchEventAndRenderCalendar();
 
@@ -226,7 +230,6 @@
             //Ajax call to get the events from database
             function FetchEventAndRenderCalendar() {
                 schedule = [];
-
                 $.ajax({
                     type: "GET",
                     url: "/Schedule/GetEvents",
@@ -243,10 +246,6 @@
                                 allDay: v.IsFullDay,
                                 resourceId: v.EmployeeID,
                                 color: v.ThemeColor
-
-
-
-
                             });
                         })
 
@@ -254,6 +253,10 @@
                         $('#scheduler').fullCalendar('refetchEvents')
                         $('#scheduler').fullCalendar('refetchResources')
                         $('#scheduler').fullCalendar('render')
+                        $('#scheduler').fullCalendar('gotoDate',renderDate)
+                        //Sets renderDate to current date
+                        renderDate = moment(today).format();
+                       
                     },
                     //Catch error of loading
                     error: function (error) {
@@ -424,10 +427,10 @@
                     $('#hdEmployeeID').val(selectedEvent.resourceId);
                     $('#txtSubject').val(selectedEvent.title);
                     // selectedEvent.start.format('MM/DD/YYYY HH:mm A')
-                    $('#txtStart').val(moment.utc(selectedEvent.start).format("MM/DD/YYYY HH:mm A"));
+                    $('#txtStart').val(moment(selectedEvent.start).format("MM/DD/YYYY HH:mm A"));
                     $('#chkIsFullDay').prop("checked", selectedEvent.allDay || false);
                     $('#chkIsFullDay').change();
-                    $('#txtEnd').val(selectedEvent.end != null ? moment.utc(selectedEvent.end).format("MM/DD/YYYY HH:mm A") : "");
+                    $('#txtEnd').val(selectedEvent.end != null ? moment(selectedEvent.end).format("MM/DD/YYYY HH:mm A") : "");
                     $('#txtDescription').val(selectedEvent.description);
                     $('#ddThemeColor').val(selectedEvent.color);
 
@@ -462,12 +465,16 @@
             }
             //Function to Save a event to database
             function SaveEvent(data) {
+                //Save the date of the saved event
+                renderDate = moment(data.Start).format();
+                console.log("Saved Date: " + renderDate);
+                
                 $.ajax({//Ajax is used for to call controller to get and post data.
                     type: 'POST',
                     url: '/Schedule/SaveEvent', //Call Controller
                     data: data,
                     success: function (data) {
-                        if (data.status) {
+                        if (data.status) {                         
                             FetchEventAndRenderCalendar();
                             $('#eventAddModal').modal('hide');
                         }
@@ -562,6 +569,7 @@
 
                 if (selectedEvent != null && confirm('Are you sure?'))
                 {
+                    renderDate = moment(selectedEvent.start).format();
                     $.ajax({
                         type: 'POST',
                         url: "/Schedule/DeleteEvent",
@@ -597,7 +605,7 @@
 
                 //Check if text is inputted in submit
                 if ($('#txtSubject').val().trim() == "") {
-                    alert('Subject required')
+                    alert('Title required')
                     return;
                 }
                 if ($('#txtStart').val().trim() == "") {
@@ -621,6 +629,7 @@
 
                     EventID: $('#hdEventID').val(),
                     EmployeeID: $('#hdEmployeeID').val(),
+                    Title: $('#txtSubject').val(),
                     Start: $('#txtStart').val().trim(),
                     End: $('#chkIsFullDay').is(':checked') ? null : $('#txtEnd').val().trim(),
                     Description: $('#txtDescription').val(),
