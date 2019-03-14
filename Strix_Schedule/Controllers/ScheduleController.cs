@@ -98,7 +98,7 @@ namespace Strix_Schedule.Controllers
         }
 
 
-        //Method to Save New or edited event
+        //Event Methods
 
         //Save Event to DB
         [HttpPost]
@@ -136,6 +136,32 @@ namespace Strix_Schedule.Controllers
 
             db.SaveChanges();
             status = true;
+
+            return new JsonResult { Data = new { status = status } };
+        }
+
+
+        //Delete one week of events
+        [HttpPost]
+        public JsonResult DeleteViewWEvents(DateTime startDate, DateTime endDate)
+        {
+            var status = false;
+
+            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
+
+            db.Configuration.ProxyCreationEnabled = false;
+            var eventDelList = db.Events.Where(e => e.Start >= startDate && e.End <= endDate).ToList();
+
+            if (eventDelList != null)
+            {
+
+                foreach (var evnt in eventDelList)
+                {
+                   DeleteEvent(evnt.EventID);
+
+                }
+                status = true;
+            }
 
             return new JsonResult { Data = new { status = status } };
         }

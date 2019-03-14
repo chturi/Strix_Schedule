@@ -12,6 +12,7 @@
     <div id="scheduler">
         <div class="modal-footer">
             <button type="button" class="btn btn-default" id="btnAddEmployee" style="float: left">Add Employee</button>
+            <button type="button" class="btn btn-default" id="btnDelVEvent" style="float: left">Delete Events In View</button>
         </div>
     </div>
 
@@ -196,7 +197,7 @@
 
 @*Javascript imports*@
 @section scripts{
-    @*<script src="~/Scripts/jquery-1.12.4.min.js"></script> (Not needed for some reason.)*@
+  
 
 
     <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
@@ -218,8 +219,7 @@
             var selectedEvent = null;
             var selectedResource = null;
             //Date to be rendendered by calendar      
-            var today = new Date();
-            var renderDate = moment(today).format();
+            var renderDate = new Date();
             
             //Initially execution to render calendar
             FetchEventAndRenderCalendar();
@@ -255,7 +255,7 @@
                         $('#scheduler').fullCalendar('render')
                         $('#scheduler').fullCalendar('gotoDate',renderDate)
                         //Sets renderDate to current date
-                        renderDate = moment(today).format();
+                        renderDate = new Date();
                        
                     },
                     //Catch error of loading
@@ -465,9 +465,11 @@
             }
             //Function to Save a event to database
             function SaveEvent(data) {
-                //Save the date of the saved event
-                renderDate = moment(data.Start).format();
-                console.log("Saved Date: " + renderDate);
+
+                //Save the date of the saved event for rendering, also parsing date string to UTC format             
+                if (data.Start != null) {
+                    renderDate = moment(new Date(data.Start.split(' ')[0])).format();
+                }
                 
                 $.ajax({//Ajax is used for to call controller to get and post data.
                     type: 'POST',
@@ -503,7 +505,7 @@
                     }
                 })
             }
-
+            //Functions to reset data values in modal windows
             function resetValEventModal()
             {
                 $('#hdEventID').val(0),
@@ -532,6 +534,37 @@
                 resetValResourceModal();
                 openAddEditEmployeeForm();
             })
+
+            //Button to delete all events in current View
+            $('#btnDelVEvent').click(function () {
+
+                if (confirm('Are you sure you want to delete ALL events in current view?')) {
+
+                    //Get dates of current week
+                    var currentDate = $('#scheduler').fullCalendar('getDate');
+                    var beginOfWeek = currentDate.startOf('week').format();
+                    var endOfWeek = currentDate.endOf('week').format();
+                    //Assign which date should be rendered by the schedule
+                    renderDate = moment(currentDate).format();
+                    console.log("Current Date: " + currentDate.format());
+                    console.log("Begin Date: " + beginOfWeek);
+                    console.log("End Date: " + endOfWeek);
+                    //$.ajax({
+                    //    type: 'POST',
+                    //    url: "/Schedule/DeleteViewEvents",
+                    //    data: {
+                    //        'startDate': beginOfWeek,
+                    //        'endDate': endOfWeek}, //Used to send data through HTTP request POST
+                    //    success: function (data) {
+                    //        if (data.status) {  //refresh calender if success
+                    //            FetchEventAndRenderCalendar();
+                    //            }
+                    //    },
+                    //    error: function () {
+                    //        alert('Failed to delete events!')
+                    //    }})
+                }})
+
 
             //Button to Save New Employee
             $('#btnSaveEmployee').click(function () {
@@ -684,8 +717,6 @@
                     })
                 }
             })
-
-
 
             //Draggable eventmenu
             $('#external-events .fc-event').each(function () {
