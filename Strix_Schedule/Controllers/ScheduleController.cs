@@ -143,7 +143,7 @@ namespace Strix_Schedule.Controllers
 
         //Delete one week of events
         [HttpPost]
-        public JsonResult DeleteViewWEvents(DateTime startDate, DateTime endDate)
+        public JsonResult DeleteViewEvents(DateTime startDate, DateTime endDate)
         {
             var status = false;
 

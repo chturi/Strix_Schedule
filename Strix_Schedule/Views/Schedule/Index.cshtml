@@ -545,24 +545,22 @@
                     var beginOfWeek = currentDate.startOf('week').format();
                     var endOfWeek = currentDate.endOf('week').format();
                     //Assign which date should be rendered by the schedule
-                    renderDate = moment(currentDate).format();
-                    console.log("Current Date: " + currentDate.format());
-                    console.log("Begin Date: " + beginOfWeek);
-                    console.log("End Date: " + endOfWeek);
-                    //$.ajax({
-                    //    type: 'POST',
-                    //    url: "/Schedule/DeleteViewEvents",
-                    //    data: {
-                    //        'startDate': beginOfWeek,
-                    //        'endDate': endOfWeek}, //Used to send data through HTTP request POST
-                    //    success: function (data) {
-                    //        if (data.status) {  //refresh calender if success
-                    //            FetchEventAndRenderCalendar();
-                    //            }
-                    //    },
-                    //    error: function () {
-                    //        alert('Failed to delete events!')
-                    //    }})
+                    renderDate = currentDate.format();
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: "/Schedule/DeleteViewEvents",
+                        data: {
+                            'startDate': beginOfWeek,
+                            'endDate': endOfWeek}, //Used to send data through HTTP request POST
+                        success: function (data) {
+                            if (data.status) {  //refresh calender if success
+                                FetchEventAndRenderCalendar();
+                                }
+                        },
+                        error: function () {
+                            alert('Failed to delete events!')
+                        }})
                 }})
 
 
