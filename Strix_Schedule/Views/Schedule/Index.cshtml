@@ -11,9 +11,9 @@
     @*@Schedule element*@
     <div id="scheduler">
         <div class="modal-footer">
-            <button type="button" class="btn btn-default" id="btnAddEmployee" style="float: left">Add Employee</button>
-            <button type="button" class="btn btn-default" id="btnDelVEvent" style="float: right">Delete Events In View</button>
-            <button type="button" class="btn btn-default" id="btnCopyVEvent" style="float: right">Copy Events To Next Week</button>
+            <button type="button" class="fc-month-button fc-button fc-state-default" id="btnAddEmployee" style="float: left">Add Employee</button>
+            <button type="button" class="fc-month-button fc-button fc-state-default" id="btnDelVEvent" style="float: right">Delete Events In View</button>
+            <button type="button" class="fc-month-button fc-button fc-state-default" id="btnCopyVEvent" style="float: right">Copy Events To Next Week</button>
         </div>
     </div>
 
@@ -82,16 +82,16 @@
                 <h4 class="modal-title"><span id="eventTitle"></span></h4>
             </div>
             <div class="modal-body">
-                <button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                <button id="btnDelete" class="fc-month-button fc-button fc-state-default btn-sm pull-right">
                     <span class="=" glyphicon glyphicon-remove"></span> Remove
                 </button>
-                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                <button id="btnEdit" class="fc-month-button fc-button fc-state-default btn-sm pull-right" style="margin-right:5px;">
                     <span class="=" glyphicon glyphicon-remove"></span> Edit
                 </button>
                 <p id="pDetails"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="fc-month-button fc-button fc-state-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -175,8 +175,8 @@
                             <option value="#bc23ac">Magenta</option>
                         </select>
                     </div>
-                    <button type="button" id="btnSave" class="btn btn-success">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSave" class="fc-month-button fc-button fc-state-default">Save</button>
+                    <button type="button" class="fc-month-button fc-button fc-state-default" data-dismiss="modal">Close</button>
                 </form>
             </div>
             <div class="modal-footer">
@@ -417,6 +417,7 @@
                     weekNumbers: true,
                     draggable: true,
                     weekends: false,
+                    eventTextColor:'white',
                      })
 
             }

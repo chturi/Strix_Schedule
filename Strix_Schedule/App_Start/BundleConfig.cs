@@ -24,7 +24,7 @@ namespace Strix_Schedule
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap_SpaceLabbV3.css",
                       "~/Content/site.css"));
         }
     }
