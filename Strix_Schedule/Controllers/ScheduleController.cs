@@ -140,31 +140,52 @@ namespace Strix_Schedule.Controllers
             return new JsonResult { Data = new { status = status } };
         }
 
-
-        //Delete one week of events
+        //Copy Previous week events
         [HttpPost]
-        public JsonResult DeleteViewEvents(DateTime startDate, DateTime endDate)
+        public JsonResult Save1WEvent(DateTime startDate, DateTime endDate)
         {
             var status = false;
+            int nrOfDuplicate = 0;
 
             Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
 
             db.Configuration.ProxyCreationEnabled = false;
-            var eventDelList = db.Events.Where(e => e.Start >= startDate && e.End <= endDate).ToList();
+            var eventCopyList = db.Events.Where(e => e.Start >= startDate && e.End <= endDate).ToList();
 
-            if (eventDelList != null)
+            if (eventCopyList != null)
             {
-
-                foreach (var evnt in eventDelList)
-                {
-                   DeleteEvent(evnt.EventID);
-
-                }
                 status = true;
-            }
 
-            return new JsonResult { Data = new { status = status } };
+                foreach (var evnt in eventCopyList)
+                {
+                    // Check if a event at specified time already is saved
+                  bool  duplicateEvent = db.Events.Any(e => e.EmployeeID == evnt.EmployeeID 
+                  && e.Start.Year == evnt.Start.Year
+                  && e.Start.Month == evnt.Start.Month
+                  && e.Start.Day == evnt.Start.Day +7 ) ;
+
+                    if (!duplicateEvent)
+                    {
+                        evnt.EventID = 0;
+                        evnt.Start = evnt.Start.AddDays(7);
+                        if (evnt.End.HasValue)
+                        {
+                            evnt.End=evnt.End.Value.AddDays(7);
+                        }
+                        SaveEvent(evnt);          
+                    }
+                    else
+                    {
+                        nrOfDuplicate++;
+                    }
+                   
+                }
+
+            }
+            return new JsonResult { Data = new { status = status, nrOfDuplicate = nrOfDuplicate } };
+
         }
+
 
         //Delete Event from DB
         [HttpPost]
@@ -190,6 +211,31 @@ namespace Strix_Schedule.Controllers
 
         }
 
+
+        //Delete one week of events
+        [HttpPost]
+        public JsonResult DeleteViewEvents(DateTime startDate, DateTime endDate)
+        {
+            var status = false;
+
+            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
+
+            db.Configuration.ProxyCreationEnabled = false;
+            var eventDelList = db.Events.Where(e => e.Start >= startDate && e.End <= endDate).ToList();
+
+            if (eventDelList != null)
+            {
+
+                foreach (var evnt in eventDelList)
+                {
+                    DeleteEvent(evnt.EventID);
+
+                }
+                status = true;
+            }
+
+            return new JsonResult { Data = new { status = status } };
+        }
 
         //Employee Methods
 

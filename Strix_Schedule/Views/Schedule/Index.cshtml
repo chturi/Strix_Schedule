@@ -13,6 +13,7 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-default" id="btnAddEmployee" style="float: left">Add Employee</button>
             <button type="button" class="btn btn-default" id="btnDelVEvent" style="float: left">Delete Events In View</button>
+            <button type="button" class="btn btn-default" id="btnCopyVEvent" style="float: left">Copy Events To Next Week</button>
         </div>
     </div>
 
@@ -563,6 +564,42 @@
                         }})
                 }})
 
+            $('#btnCopyVEvent').click(function () {
+
+                if (confirm('Are you sure you want to copy ALL events in current view?')) {
+
+                    //Get dates of current week
+                    var currentDate = $('#scheduler').fullCalendar('getDate');
+                    var beginOfWeek = currentDate.startOf('week').format();
+                    var endOfWeek = currentDate.endOf('week').format();
+                    //Assign which date should be rendered by the schedule
+                    renderDate = currentDate.add(7,'days').format();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "/Schedule/Save1WEvent",
+                        data: {
+                            'startDate': beginOfWeek,
+                            'endDate': endOfWeek
+                        }, //Used to send data through HTTP request POST
+                        success: function (data) {
+                            if (data.status) {  //refresh calender if success
+                                FetchEventAndRenderCalendar();
+
+                                if(data.nrOfDuplicate != "0")
+                                {
+                                    alert('Warning: ' + data.nrOfDuplicate + ' number of events were not copied due to duplicate date already exsists!')
+                                }
+                                else 
+                                    {alert ('All events were successfully copied!')}
+                            }
+                        },
+                        error: function () {
+                            alert('Failed to copy any events!')
+                        }
+                    })
+                }
+            })
 
             //Button to Save New Employee
             $('#btnSaveEmployee').click(function () {
