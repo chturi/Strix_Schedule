@@ -51,13 +51,13 @@ namespace Strix_Schedule.Controllers
                 //Adding text to event description depending on how long employee works that day
                 if (res.IsFullDay)
                 {
-                    res.Description = tempEmp.Occupation + ", works full time today";
+                    res.Description = tempEmp.FirstName + " " + tempEmp.LastName + " works full time today";
                 }
                 else
                 {
                     res.End = evnt.End;
                     TimeSpan? timeDif = res.End - res.Start;
-                    res.Description = tempEmp.Occupation + ", works " + timeDif.Value.TotalHours + " hours today.";
+                    res.Description = tempEmp.FirstName + " " + tempEmp.LastName + ", works " + timeDif.Value.TotalHours + " hours today.";
                 }
 
                 

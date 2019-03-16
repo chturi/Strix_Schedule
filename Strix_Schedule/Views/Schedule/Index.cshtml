@@ -12,8 +12,8 @@
     <div id="scheduler">
         <div class="modal-footer">
             <button type="button" class="btn btn-default" id="btnAddEmployee" style="float: left">Add Employee</button>
-            <button type="button" class="btn btn-default" id="btnDelVEvent" style="float: left">Delete Events In View</button>
-            <button type="button" class="btn btn-default" id="btnCopyVEvent" style="float: left">Copy Events To Next Week</button>
+            <button type="button" class="btn btn-default" id="btnDelVEvent" style="float: right">Delete Events In View</button>
+            <button type="button" class="btn btn-default" id="btnCopyVEvent" style="float: right">Copy Events To Next Week</button>
         </div>
     </div>
 
@@ -167,11 +167,12 @@
                     <div class="form-group">
                         <label>Theme Color</label>
                         <select id="ddThemeColor" class="form-control">
-                            <option value="red">Red</option>
-                            <option value="blue">Blue</option>
-                            <option value="black">Black</option>
-                            <option value="green">Green</option>
+                            <option value="#56ad68">Green</option>
                             <option value="#c9c36e">Yellow</option>
+                            <option value="#5677ad">Blue</option>
+                            <option value="#6dc9a1">Emerald</option>
+                            <option value="#8429ce">Purple</option>
+                            <option value="#bc23ac">Magenta</option>
                         </select>
                     </div>
                     <button type="button" id="btnSave" class="btn btn-success">Save</button>
@@ -409,7 +410,6 @@
                             Description: event.title,
                             ThemeColor: event.color
                         }
-                        console.log(data);
                         SaveEvent(data);
                     }
                     ,
