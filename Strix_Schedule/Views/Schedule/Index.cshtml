@@ -47,8 +47,7 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Add Employee</h4>
             </div>
-            <div class="modal-body">
-                <form class="col-md-12 form-horizontal">
+            <div class="modal-body">               
                     <input type="hidden" id="hdEmployeeID" value="0" />
                     <div class="form-group">
                         <label>First Name</label>
@@ -65,9 +64,8 @@
                             <option value="Waiter">Waiter</option>
                         </select>
                     </div>
-                    <button type="button" id="btnSaveEmployee" class="btn btn-success">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </form>
+                    <button type="button" id="btnSaveEmployee" class="fc-month-button fc-button fc-state-default">Save</button>
+                    <button type="button" class="fc-month-button fc-button fc-state-default" data-dismiss="modal">Close</button>               
             </div>
         </div>
     </div>
@@ -106,16 +104,16 @@
                 <h4 class="modal-title"><span id="resourceTitle"></span></h4>
             </div>
             <div class="modal-body">
-                <button id="btnDeleteRes" class="btn btn-default btn-sm pull-right">
+                <button id="btnDeleteRes" class="fc-month-button fc-button fc-state-default pull-right">
                     <span class="=" glyphicon glyphicon-remove"></span> Remove
                 </button>
-                <button id="btnEditRes" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                <button id="btnEditRes" class="fc-month-button fc-button fc-state-default pull-right" style="margin-right:5px;">
                     <span class="=" glyphicon glyphicon-remove"></span> Edit
                 </button>
                 <p id="pDetailsRes"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="fc-month-button fc-button fc-state-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -130,7 +128,7 @@
                 <h4 class="modal-title">Save Event</h4>
             </div>
             <div class="modal-body">
-                <form class="col-md-12 form-horizontal">
+                <form>
                     <input type="hidden" id="hdEventID" value="0" />
                     <input type="hidden" id="hdEmployeeID" value="0" />
                     <div class="form-group">
