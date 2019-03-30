@@ -46,6 +46,10 @@
 
     }
 
-    #datePicker {
-        padding-right: 255px;
+    #schedulerHome {
+
+        width: 900px;
+        height: 700px;
+        margin: auto;
     }
+

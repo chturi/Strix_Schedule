@@ -3,29 +3,345 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>Strix Schedule</h1>
+    <p class="lead">Schedule for Strix resaurant in Sundbyberg Sweden</p>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+
+    @*@Schedule element*@
+    <div id="schedulerHome">
+        <div class="modal-footer">
+            </div>
+        </div>
+
+
+
+
+@*Event click modal*@
+<div id="eventClickModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span id="eventTitle"></span></h4>
+            </div>
+            <div class="modal-body">                
+                <p id="pDetails"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="fc-month-button fc-button fc-state-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
+
+@*Resource click modal*@
+<div id="resourceClickModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><span id="resourceTitle"></span></h4>
+            </div>
+            <div class="modal-body">
+                <p id="pDetailsRes"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="fc-month-button fc-button fc-state-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*CSS Imports*@
+<link href="~/Content/dragableEventMenu.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+@*Javascript imports*@
+@section scripts{
+
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script>
+        //Schedule functions
+        $(document).ready(function () {
+
+            //Storing variables for event calling and execution
+            var schedule = [];
+            var selectedEvent = null;
+            var selectedResource = null;
+            //Date to be rendendered by calendar
+            var renderDate = new Date();
+
+            //Initially execution to render calendar
+            FetchEventAndRenderCalendar();
+
+
+            //Functions for Application
+
+            //Ajax call to get the events from database
+            function FetchEventAndRenderCalendar() {
+                schedule = [];
+                $.ajax({
+                    type: "GET",
+                    url: "/Schedule/GetEvents",
+                    success: function (data) {
+                        //For loop to get all events in database
+                        $.each(data, function (i, v) {
+                            schedule.push({
+                                eventID: v.EventID,
+                                title: v.EventTitle,
+                                description: v.Description,
+                                start: moment(v.Start).format(),
+                                end: v.End != null ? moment(v.End).format() : null,
+                                color: v.ThemeColor,
+                                allDay: v.IsFullDay,
+                                resourceId: v.EmployeeID,
+                                color: v.ThemeColor
+                            });
+                        })
+
+                        GenerateScheduler(schedule)
+                        $('#schedulerHome').fullCalendar('refetchEvents')
+                        $('#schedulerHome').fullCalendar('refetchResources')
+                        $('#schedulerHome').fullCalendar('render')
+                        $('#schedulerHome').fullCalendar('gotoDate', renderDate)
+                        //Sets renderDate to current date
+                        renderDate = new Date();
+
+                    },
+                    //Catch error of loading
+                    error: function (error) {
+                        alert('Failed to load all events in schedule!')
+                    },
+                })
+            }
+            //Function to Generate Calendar
+            function GenerateScheduler(schedule) {
+                //Clear any previous rendered Scheduler
+                $('#schedulerHome').fullCalendar('destroy')
+                //Generate new Scheduler
+                $('#schedulerHome').fullCalendar({
+                    schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source', //Open source liscence key
+                    contentHeight: 600,
+                    defaultDate: new Date(), //Display todays date by default
+                    defaultView: 'timelineWeek',
+                    timeFormat: 'h(:mm)a',
+                    header: {
+                        left: 'prev,next today', //Option buttons on left corner of header of Scheduler
+                        center: 'title',
+                        right: 'month,timelineWeek'
+                    },
+                    views: { //Adds timeline view option for fullcalender, "resource view"
+                        timelineFiveDays: {
+                            type: 'timelineWeek',
+                            duration: { days: 5 },
+                            minTime: '06:00:00',
+                            maxTime: '18:00:00',
+                            slotDuration: '04:00:00',
+                            slotLabelInterval: '04:00:00',
+                            scrollTime: '06:00'
+                        }
+                    },
+                    eventLimit: true, //if resource slot is full, replaces graphical represenation with plus sign.
+                    eventColor: '#378006', //Default event color
+                    events: schedule,
+                    resourceGroupField: 'groupId',
+                    resources: {
+                        url: "/Schedule/GetResources",
+                        type: 'POST'
+                    },
+                    //On click event for resources
+                    resourceRender: function(resource, labelTds, bodyTds) {
+                        labelTds.on('click', function () {
+                            selectedResource = resource;
+                            $('#resourceClickModal #resourceTitle').text(resource.title);
+                            var $description = $('<div/>');
+                            $description.append($('<p>').html('<b>Employment ID: </b>' + resource.id));
+                            $description.append($('<p>').html('<b>Occupation: </b>' + resource.groupId));
+                            $('#resourceClickModal #pDetailsRes').empty().html($description);
+                            $('#resourceClickModal').modal();
+                        });
+                    },
+                    eventClick: function (calEvent, jsEvent, view) {
+                        //Creates HTML code for displaying on event click details
+                        selectedEvent = calEvent;
+                        $('#eventClickModal #eventTitle').text(calEvent.title);
+                        var $description = $('<div/>');
+                        $description.append($('<p>').html('<b>Start: </b>' + moment(calEvent.start).format("MM/DD/YYYY HH:mm A")));
+                        if (calEvent.end != null) {
+                            $description.append($('<p>').html('<b>End: </b>' + moment(calEvent.end).format("MM/DD/YYYY HH:mm A")));
+                        }
+                        $description.append($('<p>').html('<b>Description: </b>' + calEvent.description));
+                        $('#eventClickModal #pDetails').empty().html($description);
+                        $('#eventClickModal').modal();
+                    },
+                    select: function (start,end,event,view,resource) {
+                        var ResourceTitle = resource.title
+                        var ResourceId = resource.id
+                        selectedEvent = {
+                            eventID: 0,
+                            title: ResourceTitle,
+                            description: '',
+                            start: moment(start).format(),
+                            end: moment(end).format(),
+                            allDay: false,
+                            color: '',
+                            resourceId: ResourceId
+                        }
+
+                        openAddEditForm();
+                    },
+                    //Time slot settings
+                    minTime: '06:00:00',
+                    maxTime: '18:00:00',
+                    slotDuration: '04:00:00',
+                    slotLabelInterval: '04:00:00',
+                    scrollTime: '06:00',
+                    //Editable information
+                    editable: false,
+                    droppable: false,
+                    selectable: true,                 
+                    eventOverlap: false,
+                    weekNumbers: true,
+                    draggable: true,
+                    weekends: false,
+                    resourceAreaWidth: "20%",
+                    eventTextColor:'white',
+                     })
+
+            }
+
+            ////Function to Open Add/Edit form
+            //function openAddEditForm() {
+            //    if (selectedEvent != null) {
+            //        //Gives value to the modal CSS/HTML code.
+            //        $('#hdEventID').val(selectedEvent.eventID);
+            //        $('#hdEmployeeID').val(selectedEvent.resourceId);
+            //        $('#txtSubject').val(selectedEvent.title);
+            //        // selectedEvent.start.format('MM/DD/YYYY HH:mm A')
+            //        $('#txtStart').val(moment(selectedEvent.start).format("MM/DD/YYYY HH:mm A"));
+            //        $('#chkIsFullDay').prop("checked", selectedEvent.allDay || false);
+            //        $('#chkIsFullDay').change();
+            //        $('#txtEnd').val(selectedEvent.end != null ? moment(selectedEvent.end).format("MM/DD/YYYY HH:mm A") : "");
+            //        $('#txtDescription').val(selectedEvent.description);
+            //        $('#ddThemeColor').val(selectedEvent.color);
+
+            //    }
+            //    //Hides modal
+            //    $('#eventClickModal').modal('hide');
+            //    $('#eventAddModal').modal();
+            //}
+            ////Open add costumer modal form
+            //function openAddEditEmployeeForm()
+            //{
+            //    if (selectedResource != null) {
+
+            //        var namesplit = [];
+            //        namesplit = selectedResource.title.split(" "); // Split title into first and last name
+            //        var firstname = namesplit[0];
+            //        var lastname = namesplit.slice(1, namesplit.length).toString().replace(","," ") //If persons last name has several or spaces between lastnames they are included
+
+
+            //        $('#hdEmployeeID').val(selectedResource.id);
+            //        $('#txtFirstName').val(firstname);
+            //        $('#txtLastName').val(lastname);
+            //        $('#ddOccupation').val(selectedResource.groupId);
+
+            //        selectedResource = null;
+
+
+            //    }
+
+            //$('#resourceClickModal').modal('hide');
+            //$('#employeeAddModal').modal('show');
+            //}
+
+            //Function to Save a event to database
+            function SaveEvent(data) {
+
+                //Save the date of the saved event for rendering, also parsing date string to UTC format
+                if (data.Start != null) {
+                    renderDate = moment(new Date(data.Start.split(' ')[0])).format();
+                }
+
+                $.ajax({//Ajax is used for to call controller to get and post data.
+                    type: 'POST',
+                    url: '/Schedule/SaveEvent', //Call Controller
+                    data: data,
+                    success: function (data) {
+                        if (data.status) {
+                            FetchEventAndRenderCalendar();
+                            $('#eventAddModal').modal('hide');
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to Save event!');
+                    }
+                })
+            }
+            //Function to save new Employee
+            function SaveEmployee(data)
+            {
+                $.ajax({//Ajax is used for to call controller to get and post data.
+                    type: 'POST',
+                    url: '/Schedule/SaveEmployee', //Call Controller
+                    data: data,
+                    success: function (data) {
+                        if (data.status) {
+                            FetchEventAndRenderCalendar();
+                            $('#employeeAddModal').modal('hide');
+
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to Save Employee!');
+                    }
+                })
+            }
+            //Functions to reset data values in modal windows
+            function resetValEventModal()
+            {
+                $('#hdEventID').val(0),
+                $('#hdEmployeeID').val(0),
+                $('#txtStart').val(" "),
+                $('#chkIsFullDay').is(':checked'),
+                $('#txtEnd').val(" "),
+                $('#txtDescription').val(" "),
+                $('#ddThemeColor').val(" "),
+                $('#chkIsFullDay').val(" ")
+            }
+            function resetValResourceModal()
+            {
+                $('#hdEmployeeID').val(0);
+                $('#txtFirstName').val("");
+                $('#txtLastName').val("");
+                $('#ddOccupation').val("");
+
+            }
+
+            //Button handlers for Application
+
+
+         
+
+            //Employee edit buttons
+       
+
+           
+
+
+        })
+    </script>
+}
+
