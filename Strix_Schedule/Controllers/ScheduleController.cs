@@ -11,6 +11,7 @@ namespace Strix_Schedule.Controllers
     public class ScheduleController : Controller
     {
         // GET: Schedule
+        [Authorize]
         public ActionResult Index()
         {
             return View();
