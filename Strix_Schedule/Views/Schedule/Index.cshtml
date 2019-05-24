@@ -62,6 +62,7 @@
                         <select id="ddOccupation" class="form-control">
                             <option value="Extra">Extra</option>
                             <option value="Waiter">Waiter</option>
+                            <option value="Misc">Misc</option>
                         </select>
                     </div>
                     <button type="button" id="btnSaveEmployee" class="fc-month-button fc-button fc-state-default">Save</button>
@@ -284,11 +285,6 @@
                         timelineFiveDays: {
                             type: 'timelineWeek',
                             duration: { days: 5 },
-                            minTime: '06:00:00',
-                            maxTime: '18:00:00',
-                            slotDuration: '04:00:00',
-                            slotLabelInterval: '04:00:00',
-                            scrollTime: '06:00'
                         }
                     },
                     eventLimit: true, //if resource slot is full, replaces graphical represenation with plus sign.
@@ -341,11 +337,19 @@
                         openAddEditForm();
                     },
                     //Time slot settings
-                    minTime: '06:00:00',
-                    maxTime: '18:00:00',
-                    slotDuration: '04:00:00',
-                    slotLabelInterval: '04:00:00',
-                    scrollTime: '06:00',
+                    minTime: '12:00:00',
+                    maxTime: '12:30:00',
+                    slotDuration: '00:30:00',
+                    //slotLabelInterval: '12:00:00',                  
+                    slotLabelFormat: ['[Week] w',
+                    'dddd D/M'],
+                    
+                    //eventAfterRender: function(event, element, view) {
+                    //        $(element).css('width','100px');
+                    //    },
+                    
+                  
+                   
                     //Editable information
                     editable: true,
                     droppable: true,
@@ -399,6 +403,11 @@
                             dateHolderEnd.setHours(16)
                             event.color = "#bc23ac"
                         }
+                        if (event.resourceId == 24)
+                        {
+                            event.color = "#FF0000"
+                        }
+
 
                         var data = {
                             EventID: 0,
@@ -416,7 +425,9 @@
                     weekNumbers: true,
                     draggable: true,
                     weekends: false,
-                    eventTextColor:'white',
+                    eventTextColor: 'white',
+                    displayEventTime: true,
+                    displayEventEnd: true,
                      })
 
             }
@@ -762,10 +773,7 @@
                     title: $.trim($(this).text()), // use the element's text as the event title
                     duration: '09:00',
                     startTime: '06:00:00',
-                    
-
-
-
+     
                 });
 
 
