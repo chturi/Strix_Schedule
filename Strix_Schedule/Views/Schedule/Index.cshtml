@@ -339,8 +339,7 @@
                     //Time slot settings
                     minTime: '12:00:00',
                     maxTime: '12:30:00',
-                    slotDuration: '00:30:00',
-                    //slotLabelInterval: '12:00:00',                  
+                    slotDuration: '00:30:00',                                    
                     slotLabelFormat: ['[Week] w',
                     'dddd D/M'],
                     
@@ -376,36 +375,36 @@
                         if (event.title == "Dessert") {
                             dateHolderStart.setHours(7)
                             dateHolderEnd.setHours(15, 30)
-                            event.color = "#c9c36e"
+                            
                         }
                         else if (event.title == "Kuren") {
                             dateHolderStart.setHours(6)
                             dateHolderEnd.setHours(15)
-                            event.color = "#56ad68"
+                            
                         }
                         else if (event.title == "Matsalen") {
                             dateHolderStart.setHours(9);
                             dateHolderEnd.setHours(17)
-                            event.color = "#5677ad"
+                            
                         }
                         else if (event.title == "Hovtjänst") {
                             dateHolderStart.setHours(7,30);
                             dateHolderEnd.setHours(16)
-                            event.color = "#6dc9a1"
+                           
                         }
                         else if (event.title == "Deltid") {
                             dateHolderStart.setHours(10);
                             dateHolderEnd.setHours(15)
-                            event.color = "#8429ce"
+                            
                         }
                         else if (event.title == "Extra") {
                             dateHolderStart.setHours(10);
                             dateHolderEnd.setHours(16)
-                            event.color = "#bc23ac"
+                            
                         }
                         if (event.resourceId == 24)
                         {
-                            event.color = "#FF0000"
+                            event.backgroundColor = "#FF0000"
                         }
 
 
@@ -416,7 +415,7 @@
                             Start: moment(dateHolderStart).format("MM-DD-YYYY HH:mm a"),
                             End: moment(dateHolderEnd).format("MM-DD-YYYY HH:mm a"),
                             Description: event.title,
-                            ThemeColor: event.color
+                            ThemeColor: event.backgroundColor
                         }
                         SaveEvent(data);
                     }
@@ -766,17 +765,13 @@
 
             //Draggable eventmenu
             $('#external-events .fc-event').each(function () {
-
                 // store data so the calendar knows to render an event upon drop
                 $(this).data('event', {
                     EventID: 0,
-                    title: $.trim($(this).text()), // use the element's text as the event title
-                    duration: '09:00',
-                    startTime: '06:00:00',
-     
+                    title: $.trim($(this).text()), // use the element's text as the event title  
+                    backgroundColor: $(this).css("background-color")
+                   
                 });
-
-
                 // make the event draggable using jQuery UI
                 $(this).draggable({
                     zIndex: 999,
@@ -785,7 +780,7 @@
                 });
 
             });
-
+            
 
         })
     </script>
