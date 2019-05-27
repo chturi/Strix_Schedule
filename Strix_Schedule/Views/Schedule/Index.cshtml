@@ -9,7 +9,7 @@
 <div id='wrap'>
 
     @*@Schedule element*@
-    <div id="scheduler">
+    <div id="scheduler" class='fc-no-overlap'>
         <div class="modal-footer">
             <button type="button" class="fc-month-button fc-button fc-state-default" id="btnAddEmployee" style="float: left">Add Employee</button>
             <button type="button" class="fc-month-button fc-button fc-state-default" id="btnDelVEvent" style="float: right">Delete Events In View</button>
@@ -341,14 +341,7 @@
                     maxTime: '12:30:00',
                     slotDuration: '00:30:00',                                    
                     slotLabelFormat: ['[Week] w',
-                    'dddd D/M'],
-                    
-                    //eventAfterRender: function(event, element, view) {
-                    //        $(element).css('width','100px');
-                    //    },
-                    
-                  
-                   
+                    'dddd D/M'],                
                     //Editable information
                     editable: true,
                     droppable: true,
@@ -421,8 +414,7 @@
                             ThemeColor: event.backgroundColor
                         }
                         SaveEvent(data);
-                    }
-                    ,
+                    },
                     eventOverlap: true,
                     weekNumbers: true,
                     draggable: true,
@@ -430,6 +422,7 @@
                     eventTextColor: 'white',
                     displayEventTime: true,
                     displayEventEnd: true,
+                    
                      })
 
             }

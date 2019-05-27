@@ -145,12 +145,7 @@
                     views: { //Adds timeline view option for fullcalender, "resource view"
                         timelineFiveDays: {
                             type: 'timelineWeek',
-                            duration: { days: 5 },
-                            minTime: '06:00:00',
-                            maxTime: '18:00:00',
-                            slotDuration: '04:00:00',
-                            slotLabelInterval: '04:00:00',
-                            scrollTime: '06:00'
+                            duration: { days: 5 },                     
                         }
                     },
                     eventLimit: true, //if resource slot is full, replaces graphical represenation with plus sign.
@@ -203,11 +198,11 @@
                         openAddEditForm();
                     },
                     //Time slot settings
-                    minTime: '06:00:00',
-                    maxTime: '18:00:00',
-                    slotDuration: '04:00:00',
-                    slotLabelInterval: '04:00:00',
-                    scrollTime: '06:00',
+                    minTime: '12:00:00',
+                    maxTime: '12:30:00',
+                    slotDuration: '00:30:00',
+                    slotLabelFormat: ['[Week] w',
+                    'dddd D/M'],
                     //Editable information
                     editable: false,
                     droppable: false,
@@ -217,55 +212,14 @@
                     draggable: true,
                     weekends: false,
                     resourceAreaWidth: "20%",
-                    eventTextColor:'white',
+                    eventTextColor: 'white',
+                    displayEventTime: true,
+                    displayEventEnd: true,
                      })
 
             }
 
-            ////Function to Open Add/Edit form
-            //function openAddEditForm() {
-            //    if (selectedEvent != null) {
-            //        //Gives value to the modal CSS/HTML code.
-            //        $('#hdEventID').val(selectedEvent.eventID);
-            //        $('#hdEmployeeID').val(selectedEvent.resourceId);
-            //        $('#txtSubject').val(selectedEvent.title);
-            //        // selectedEvent.start.format('MM/DD/YYYY HH:mm A')
-            //        $('#txtStart').val(moment(selectedEvent.start).format("MM/DD/YYYY HH:mm A"));
-            //        $('#chkIsFullDay').prop("checked", selectedEvent.allDay || false);
-            //        $('#chkIsFullDay').change();
-            //        $('#txtEnd').val(selectedEvent.end != null ? moment(selectedEvent.end).format("MM/DD/YYYY HH:mm A") : "");
-            //        $('#txtDescription').val(selectedEvent.description);
-            //        $('#ddThemeColor').val(selectedEvent.color);
-
-            //    }
-            //    //Hides modal
-            //    $('#eventClickModal').modal('hide');
-            //    $('#eventAddModal').modal();
-            //}
-            ////Open add costumer modal form
-            //function openAddEditEmployeeForm()
-            //{
-            //    if (selectedResource != null) {
-
-            //        var namesplit = [];
-            //        namesplit = selectedResource.title.split(" "); // Split title into first and last name
-            //        var firstname = namesplit[0];
-            //        var lastname = namesplit.slice(1, namesplit.length).toString().replace(","," ") //If persons last name has several or spaces between lastnames they are included
-
-
-            //        $('#hdEmployeeID').val(selectedResource.id);
-            //        $('#txtFirstName').val(firstname);
-            //        $('#txtLastName').val(lastname);
-            //        $('#ddOccupation').val(selectedResource.groupId);
-
-            //        selectedResource = null;
-
-
-            //    }
-
-            //$('#resourceClickModal').modal('hide');
-            //$('#employeeAddModal').modal('show');
-            //}
+     
 
             //Function to Save a event to database
             function SaveEvent(data) {
