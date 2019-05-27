@@ -62,7 +62,7 @@
                         <select id="ddOccupation" class="form-control">
                             <option value="Extra">Extra</option>
                             <option value="Waiter">Waiter</option>
-                            <option value="Misc">Misc</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <button type="button" id="btnSaveEmployee" class="fc-month-button fc-button fc-state-default">Save</button>
@@ -371,6 +371,9 @@
                         //Temporary Variables for date manipulation.
                         var dateHolderStart = new Date(event.start);
                         var dateHolderEnd = new Date(event.start);
+                        var eventResource = $('#scheduler').fullCalendar('getResourceById', event.resourceId);
+                        
+                        
                         //Changing hours on schedule depending on which event was dragged while keeping the date selected by the users dropp.
                         if (event.title == "Dessert") {
                             dateHolderStart.setHours(7)
@@ -402,7 +405,7 @@
                             dateHolderEnd.setHours(16)
                             
                         }
-                        if (event.resourceId == 24)
+                        if (eventResource.title == "Lediga Tider")
                         {
                             event.backgroundColor = "#FF0000"
                         }
@@ -420,7 +423,7 @@
                         SaveEvent(data);
                     }
                     ,
-                    eventOverlap: false,
+                    eventOverlap: true,
                     weekNumbers: true,
                     draggable: true,
                     weekends: false,
