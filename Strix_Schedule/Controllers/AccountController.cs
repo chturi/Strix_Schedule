@@ -12,7 +12,7 @@ using Strix_Schedule.Models;
 
 namespace Strix_Schedule.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -136,7 +136,7 @@ namespace Strix_Schedule.Controllers
 
         //
         // GET: /Account/Register
-        [Authorize]
+        //[Authorize]
         public ActionResult Register()
         {
             return View();
@@ -145,7 +145,7 @@ namespace Strix_Schedule.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

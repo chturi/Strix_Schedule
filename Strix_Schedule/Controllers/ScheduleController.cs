@@ -24,8 +24,8 @@ namespace Strix_Schedule.Controllers
         //Get all Events from DB
         public JsonResult GetEvents()
         {
-            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
-
+            
+            ResourceEventContext db = new ResourceEventContext();
             db.Configuration.ProxyCreationEnabled = false;
             var events = db.Events.ToList();
             //Tempory holder for resrouces
@@ -73,7 +73,7 @@ namespace Strix_Schedule.Controllers
         //Get all resources (Employees) from DB.
         public JsonResult GetResources()
         {
-            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
+            ResourceEventContext db = new ResourceEventContext();
 
             db.Configuration.ProxyCreationEnabled = false;
             var resources = db.Employees.ToList();
@@ -105,7 +105,7 @@ namespace Strix_Schedule.Controllers
         [HttpPost]
         public JsonResult SaveEvent(Event evnt)
         {
-            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
+            ResourceEventContext db = new ResourceEventContext();
             db.Configuration.ProxyCreationEnabled = false;
             var status = false;
 
@@ -148,7 +148,7 @@ namespace Strix_Schedule.Controllers
             var status = false;
             int nrOfDuplicate = 0;
 
-            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
+            ResourceEventContext db = new ResourceEventContext();
 
             db.Configuration.ProxyCreationEnabled = false;
             var eventCopyList = db.Events.Where(e => e.Start >= startDate && e.End <= endDate).ToList();
@@ -192,7 +192,7 @@ namespace Strix_Schedule.Controllers
         [HttpPost]
         public JsonResult DeleteEvent(int eventID)
         {
-            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
+            ResourceEventContext db = new ResourceEventContext();
             db.Configuration.ProxyCreationEnabled = false;
             var status = false;
 
@@ -219,7 +219,7 @@ namespace Strix_Schedule.Controllers
         {
             var status = false;
 
-            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
+            ResourceEventContext db = new ResourceEventContext();
 
             db.Configuration.ProxyCreationEnabled = false;
             var eventDelList = db.Events.Where(e => e.Start >= startDate && e.End <= endDate).ToList();
@@ -245,7 +245,7 @@ namespace Strix_Schedule.Controllers
         public JsonResult SaveEmployee(Employee emp)
         {
 
-            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
+            ResourceEventContext db = new ResourceEventContext();
             db.Configuration.ProxyCreationEnabled = false;
             var status = false;
 
@@ -282,7 +282,7 @@ namespace Strix_Schedule.Controllers
         [HttpPost]
         public JsonResult DeleteEmployee(int employeeID)
         {
-            Employee_Schedule_DatabaseEntities db = new Employee_Schedule_DatabaseEntities();
+            ResourceEventContext db = new ResourceEventContext();
             db.Configuration.ProxyCreationEnabled = false;
             var status = false;
 

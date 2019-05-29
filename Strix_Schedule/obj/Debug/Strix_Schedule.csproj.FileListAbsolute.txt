@@ -77,6 +77,8 @@ C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedul
 C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedule\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedule\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedule\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedule\obj\Debug\Strix_Schedule.csprojResolveAssemblyReference.cache
 C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedule\obj\Debug\Strix_Schedule.dll
 C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedule\obj\Debug\Strix_Schedule.pdb
+C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedule\obj\Debug\Strix_Schedule.csprojAssemblyReference.cache
+C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedule\obj\Debug\Strix_Schedule.csproj.CoreCompileInputs.cache
+C:\Users\Turi\Documents\Visual Studio 2015\Projects\Strix_Schedule\Strix_Schedule\obj\Debug\Strix_Schedule.csproj.CopyComplete

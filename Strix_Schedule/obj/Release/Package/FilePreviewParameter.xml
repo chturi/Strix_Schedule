@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="EmployeeSchedularAPP" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Turi\\Documents\\Visual\ Studio\ 2015\\Projects\\Strix_Schedule\\Strix_Schedule\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Turi\\Documents\\Visual\ Studio\ 2015\\Projects\\Strix_Schedule\\Strix_Schedule\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="Add write permission to App_Data Folder" description="Add write permission to App_Data folder" value="EmployeeSchedularAPP/App_Data" tags="Hidden">
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Turi\\Documents\\Visual\ Studio\ 2015\\Projects\\Strix_Schedule\\Strix_Schedule\\obj\\Release\\Package\\PackageTmp\\App_Data$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=employeeapp.database.windows.net;Initial Catalog=EmployeeDB;Persist Security Info=True;User ID=chturi;Password=Blizzard10!" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Turi\\Documents\\Visual\ Studio\ 2015\\Projects\\Strix_Schedule\\Strix_Schedule\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="Employee_Schedule_DatabaseEntities-Web.config Connection String" description="" value="metadata=res://*/EmployeeModel.csdl|res://*/EmployeeModel.ssdl|res://*/EmployeeModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=employeeapp.database.windows.net;Initial Catalog=EmployeeDB;Persist Security Info=True;User ID=chturi;Password=Blizzard10!&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Turi\\Documents\\Visual\ Studio\ 2015\\Projects\\Strix_Schedule\\Strix_Schedule\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Employee_Schedule_DatabaseEntities']/@connectionString" />
+  </parameter>
+</parameters>
