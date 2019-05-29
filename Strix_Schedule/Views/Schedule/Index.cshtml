@@ -275,7 +275,6 @@
                     contentHeight: 600,
                     defaultDate: new Date(), //Display todays date by default
                     defaultView: 'timelineWeek',
-                    timeFormat: 'h(:mm)a',
                     header: {
                         left: 'prev,next today', //Option buttons on left corner of header of Scheduler
                         center: 'title',
@@ -341,7 +340,8 @@
                     maxTime: '12:30:00',
                     slotDuration: '00:30:00',                                    
                     slotLabelFormat: ['[Week] w',
-                    'dddd D/M'],                
+                        'dddd D/M'],  
+                    timeFormat: 'HH(:mm)',
                     //Editable information
                     editable: true,
                     droppable: true,
@@ -422,7 +422,7 @@
                     eventTextColor: 'white',
                     displayEventTime: true,
                     displayEventEnd: true,
-                    
+                    timezone: false,
                      })
 
             }
