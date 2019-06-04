@@ -85,7 +85,7 @@
 
             //Initially execution to render calendar
             FetchEventAndRenderCalendar();
-
+            $('#schedulerHome').css('font-size', '0.8em');
 
             //Functions for Application
 
@@ -198,9 +198,10 @@
                         openAddEditForm();
                     },
                     //Time slot settings
-                    minTime: '12:00:00',
-                    maxTime: '12:30:00',
-                    slotDuration: '00:30:00',
+                    minTime: '06:00:00',
+                    maxTime: '18:00:00',
+                    slotDuration: '06:00:00',
+                    slotLabelInterval: '12:00:00',
                     slotLabelFormat: ['[Week] w',
                         'dddd D/M'],
                     timeFormat: 'HH(:mm)',
@@ -216,7 +217,7 @@
                     eventTextColor: 'white',
                     displayEventTime: true,
                     displayEventEnd: true,
-                    timezone: false,
+                   
                      })
 
             }

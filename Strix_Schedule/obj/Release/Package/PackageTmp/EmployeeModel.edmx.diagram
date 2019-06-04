@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2057ad9fbffe470aa0e50068d0d52082" Name="Diagram1">
+        <EntityTypeShape EntityType="Employee_Schedule_DatabaseModel.Employee" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Employee_Schedule_DatabaseModel.Event" Width="1.5" PointX="2.875" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Employee_Schedule_DatabaseModel.FK__Events__Employee__286302EC" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
